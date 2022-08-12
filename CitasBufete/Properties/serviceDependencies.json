@@ -7,6 +7,14 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:db_bufete",
       "dynamicId": null
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:ApplicationDbContextConnection"
+    },
+    "mssql3": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:CitasBufeteContextConnection"
     }
   }
 }

@@ -65,6 +65,7 @@ namespace CitasBufete.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(cita);
+            
         }
 
         // GET: Citas/Edit/5

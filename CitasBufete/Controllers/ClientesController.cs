@@ -62,9 +62,40 @@ namespace CitasBufete.Controllers
             {
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
+                ModelState.Clear();
                 return RedirectToAction(nameof(Index));
+                
             }
             return View(cliente);
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(string identificacion, DateTime fecha_nacimiento)
+        {
+            if (identificacion == null || fecha_nacimiento == null)
+            {
+                return NotFound();
+            }
+
+            var cliente = await _context.Cliente
+                .FirstOrDefaultAsync(m => m.Identificacion == identificacion);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            if (cliente.Fecha_nacimiento != fecha_nacimiento)
+            {
+                return NotFound();
+            }
+            HttpContext.Session.SetInt32("Id_Cliente", cliente.Id);
+            HttpContext.Session.SetString("Nombre_cliente", cliente.Nombre_completo);
+            var citas = from c in _context.Cita select c;
+            citas = citas.Where(c => c.Id_cliente == cliente.Id);
+            return View("CitasCliente", citas);
         }
 
         // GET: Clientes/Edit/5
