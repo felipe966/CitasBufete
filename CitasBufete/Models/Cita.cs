@@ -8,6 +8,8 @@ namespace CitasBufete.Models
         public int Id { get; set; }
 
         public int Id_cliente { get; set; }
+        [Display(Name = "Nombre del cliente")]
+        public string Nombre_cliente { get; set; } = "";
         [Required(ErrorMessage = "Campo requerido")]
         public string Especialidad { get; set; }
         [Required(ErrorMessage = "Campo requerido")]

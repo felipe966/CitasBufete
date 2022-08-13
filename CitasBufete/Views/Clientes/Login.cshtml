@@ -4,9 +4,9 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>Login</h1>
+<h1>Autenticarse</h1>
 
-<h4>Cliente</h4>
+<h5>Ingrese los datos</h5>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,16 +20,16 @@
                 <label asp-for="Fecha_nacimiento" class="control-label"></label>
                 <input asp-for="Fecha_nacimiento" class="form-control" />
                 <span asp-validation-for="Fecha_nacimiento" class="text-danger"></span>
-            </div>
+            </div></br>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Iniciar sesión" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div></br>
+    <a asp-controller="Home" asp-action="Index">Regresar</a>
 </div>
 
 @section Scripts {

@@ -1,20 +1,20 @@
 ﻿@model CitasBufete.Models.Cita
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles Cita";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
     <h4>Cita</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id_cliente)
+            @Html.DisplayNameFor(model => model.Nombre_cliente)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id_cliente)
+            @Html.DisplayFor(model => model.Nombre_cliente)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Especialidad)
@@ -37,6 +37,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-controller="Clientes" asp-action="CitasCliente">Regresar</a>
 </div>

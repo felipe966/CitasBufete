@@ -19,14 +19,29 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (@Context.Session.GetString("Nombre_cliente") != null)
+                        {
+                           <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="CitasCliente">Gestionar Citas</a>
+                            </li> 
+                        }
+                        else{
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Login">Autenticar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Create">Registrarse</a>
+                            </li> 
+                        }
+                        
                     </ul>
                 </div>
+                @if (@Context.Session.GetString("Nombre_cliente") != null)
+                {
+                  <h5>@Context.Session.GetString("Nombre_cliente")</h5>  
+                  <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Logout">Cerrar Sesion</a>
+                }
+                
             </div>
         </nav>
     </header>
@@ -38,7 +53,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - CitasBufete - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - CitasBufete - Esteban Felipe Castillo Guillen <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

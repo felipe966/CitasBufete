@@ -1,46 +1,53 @@
 ﻿@model CitasBufete.Models.Cita
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Agendar Cita";
 }
 
 <h1>Create</h1>
 
-<h4>Cita</h4>
+<h4>Agendar Cita</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id_cliente" class="control-label"></label>
-                <input asp-for="Id_cliente" class="form-control" />
-                <span asp-validation-for="Id_cliente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Especialidad" class="control-label"></label>
-                <input asp-for="Especialidad" class="form-control" />
+                <label asp-for="Especialidad" class="control-label"></label></br>
+                @{
+                    List<SelectListItem> listItems = new List<SelectListItem>
+                    {
+                       new SelectListItem{ Text="Laboral", Value = "Laboral" },
+                       new SelectListItem{ Text="Penal", Value = "Penal" },
+                       new SelectListItem{ Text="Familia", Value = "Familia" },
+                       new SelectListItem{ Text="Civil", Value = "Civil" },
+                       new SelectListItem{ Text="Comercio", Value = "Comercio" },
+                       new SelectListItem{ Text="Notariado", Value = "Notariado" },
+                    };
+                }
+
+                @Html.DropDownListFor(model => model.Especialidad, listItems, "Seleccione")
                 <span asp-validation-for="Especialidad" class="text-danger"></span>
-            </div>
+            </div></br>
             <div class="form-group">
                 <label asp-for="Fecha" class="control-label"></label>
                 <input asp-for="Fecha" class="form-control" />
                 <span asp-validation-for="Fecha" class="text-danger"></span>
-            </div>
+            </div></br>
             <div class="form-group">
                 <label asp-for="Hora" class="control-label"></label>
                 <input asp-for="Hora" class="form-control" />
                 <span asp-validation-for="Hora" class="text-danger"></span>
-            </div>
+            </div></br>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Agendar" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
+</div></br>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Clientes" asp-action="CitasCliente">Regresar</a>
 </div>
 
 @section Scripts {

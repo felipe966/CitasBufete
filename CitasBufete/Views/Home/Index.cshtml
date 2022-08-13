@@ -3,6 +3,36 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="container">
+    <h1 class="display-4">Bienvenidos</h1></br>
+    <h5>Esta aplicación permitirá a los usuarios gestionar sus citas con el bufete sin intervención de la asistente ejecutiva.</h5></br>
+    
+    <div class="row">
+      <div class="col">
+          <p>Se puede gestionar citas para las siguientes especialidades:</p>
+      </div>
+      <div class="col">
+          <ul class="list-group">
+            <li class="list-group-item">Laboral</li>
+            <li class="list-group-item">Penal</li>
+            <li class="list-group-item">Familia</li>
+            <li class="list-group-item">Civil</li>
+            <li class="list-group-item">Comercio</li>
+            <li class="list-group-item">Notariado</li>
+        </ul>
+      </div>
+      <div class="col">
+          
+          
+      </div>
+      <div class="col">
+          <p>Si ya se ha registrado entonces debe autenticarse para gestionar sus citas</p>
+          <p><a class="btn btn-primary" asp-area="" asp-controller="Clientes" asp-action="Login">Autenticar</a></p>
+           <p>Si es un cliente nuevo debe registrarse para poder gestionar citas.</p>
+          <p> <a class="btn btn-success" asp-area="" asp-controller="Clientes" asp-action="Create">Registrarse</a></p>
+      </div>
+    </div>
+
+    
+    </div>
 </div>

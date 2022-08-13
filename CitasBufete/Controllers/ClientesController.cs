@@ -60,10 +60,22 @@ namespace CitasBufete.Controllers
         {
             if (ModelState.IsValid)
             {
+                var s_cliente = await _context.Cliente
+                .FirstOrDefaultAsync(m => m.Identificacion == cliente.Identificacion);
+                if (s_cliente != null)
+                {
+                    ModelState.AddModelError(nameof(Cliente.Identificacion), "La identificación ingresada ya existe");
+                    return View(cliente);
+                }
+                if (15>=GetYearsOld(cliente.Fecha_nacimiento))
+                {
+                    ModelState.AddModelError(nameof(Cliente.Fecha_nacimiento), "Debe ser mayor de 15 años para registrarse");
+                    return View(cliente);
+                }
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
                 ModelState.Clear();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Login");
                 
             }
             return View(cliente);
@@ -83,19 +95,34 @@ namespace CitasBufete.Controllers
 
             var cliente = await _context.Cliente
                 .FirstOrDefaultAsync(m => m.Identificacion == identificacion);
-            if (cliente == null)
+            if (cliente == null || cliente.Fecha_nacimiento != fecha_nacimiento)
             {
-                return NotFound();
+                ModelState.AddModelError(nameof(Cliente.Fecha_nacimiento), "Los datos de autenticación no son correctos");
+                return View(cliente);
             }
-            if (cliente.Fecha_nacimiento != fecha_nacimiento)
-            {
-                return NotFound();
-            }
-            HttpContext.Session.SetInt32("Id_Cliente", cliente.Id);
+            HttpContext.Session.SetInt32("Id_cliente", cliente.Id);
             HttpContext.Session.SetString("Nombre_cliente", cliente.Nombre_completo);
             var citas = from c in _context.Cita select c;
             citas = citas.Where(c => c.Id_cliente == cliente.Id);
             return View("CitasCliente", citas);
+        }
+
+        public IActionResult CitasCliente()
+        {
+            var citas = from c in _context.Cita select c;
+            citas = citas.Where(c => c.Id_cliente == (int)HttpContext.Session.GetInt32("Id_cliente"));
+            return View("CitasCliente", citas);
+            return View(citas);
+        }
+
+        public IActionResult Logout()
+        {
+            if (HttpContext.Session.GetString("Nombre_cliente") != null)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Clientes/Edit/5
@@ -189,6 +216,12 @@ namespace CitasBufete.Controllers
         private bool ClienteExists(int id)
         {
           return (_context.Cliente?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public static int GetYearsOld(DateTime birthdate)
+        {
+            var diff = DateTime.Now - birthdate;
+            return (int)(diff.TotalDays / 365.255);
         }
     }
 }
