@@ -61,12 +61,12 @@ namespace CitasBufete.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Id_cliente,Nombre_cliente,Especialidad,Fecha,Hora")] Cita cita)
+        public async Task<IActionResult> Create([Bind("Id,Fecha_solicitud,Id_cliente,Nombre_cliente,Especialidad,Fecha,Hora")] Cita cita)
         {
             if (ModelState.IsValid)
             {
-                
-                
+
+                cita.Fecha_solicitud = DateTime.Now.Date;
                 cita.Id_cliente= (int)HttpContext.Session.GetInt32("Id_cliente");
                 cita.Nombre_cliente= HttpContext.Session.GetString("Nombre_cliente");
                 _context.Add(cita);
@@ -98,7 +98,7 @@ namespace CitasBufete.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Id_cliente,Nombre_cliente,Especialidad,Fecha,Hora")] Cita cita)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha_solictud,Id_cliente,Nombre_cliente,Especialidad,Fecha,Hora")] Cita cita)
         {
             if (id != cita.Id)
             {

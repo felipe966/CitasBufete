@@ -1,0 +1,17 @@
+﻿@model CitasBufete.Models.Cliente
+
+@{
+    ViewData["Title"] = "Cerrar sesión";
+}
+
+<h1>Cerrar sesión</h1></br>
+<div>
+    <h4>Usuario: @Context.Session.GetString("Nombre_cliente")</h4>
+    <hr /></br>
+    <h3>Desea salir del gestor de citas ?</h3></br>
+    <form asp-action="Logout">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Aceptar" class="btn btn-danger" /></br></br>
+        <a asp-controller="Clientes" asp-action="CitasCliente">Regresar</a>
+    </form>
+</div>

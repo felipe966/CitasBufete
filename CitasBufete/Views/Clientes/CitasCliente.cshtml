@@ -16,6 +16,9 @@
                 Estado
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Fecha_solicitud)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Nombre_cliente)
             </th>
             <th>
@@ -44,6 +47,9 @@
                     }
                 </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Fecha_solicitud)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Nombre_cliente)
             </td>
             <td>
@@ -58,11 +64,8 @@
             <td>
                 @if (DateTime.Today < item.Fecha)
                     {
-                        <a asp-controller="Citas" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
                         <a asp-controller="Citas" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a> 
                     }
-                
-                <a asp-controller="Citas" asp-action="Details" asp-route-id="@item.Id">Detalles</a>
                 
             </td>
         </tr>

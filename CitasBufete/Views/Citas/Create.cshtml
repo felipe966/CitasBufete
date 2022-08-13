@@ -35,8 +35,22 @@
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div></br>
             <div class="form-group">
-                <label asp-for="Hora" class="control-label"></label>
-                <input asp-for="Hora" class="form-control" />
+                <label asp-for="Hora" class="control-label"></label></br>
+                @{
+                    List<SelectListItem> listHours = new List<SelectListItem>
+                    {
+                       new SelectListItem{ Text="8:00", Value = "8:00" },
+                       new SelectListItem{ Text="9:00", Value = "9:00" },
+                       new SelectListItem{ Text="10:00", Value = "10:00" },
+                       new SelectListItem{ Text="11:00", Value = "11:00" },
+                       new SelectListItem{ Text="13:00", Value = "13:00" },
+                       new SelectListItem{ Text="14:00", Value = "14:00" },
+                       new SelectListItem{ Text="15:00", Value = "15:00" },
+                       new SelectListItem{ Text="16:00", Value = "16:00" },
+                    };
+                }
+
+                @Html.DropDownListFor(model => model.Hora, listHours, "Seleccione")
                 <span asp-validation-for="Hora" class="text-danger"></span>
             </div></br>
             <div class="form-group">

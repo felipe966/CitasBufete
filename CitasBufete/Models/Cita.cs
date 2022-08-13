@@ -6,6 +6,9 @@ namespace CitasBufete.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Fecha de solicitud")]
+        [DataType(DataType.Date)]
+        public DateTime Fecha_solicitud { get; set; }=DateTime.Now.Date;
 
         public int Id_cliente { get; set; }
         [Display(Name = "Nombre del cliente")]
@@ -18,8 +21,7 @@ namespace CitasBufete.Models
         public DateTime Fecha { get; set; }
         [Required(ErrorMessage = "Campo requerido")]
         [Display(Name = "Hora de la cita")]
-        [DataType(DataType.Time)]
-        public DateTime Hora { get; set; }
+        public string Hora { get; set; }
 
 
     }

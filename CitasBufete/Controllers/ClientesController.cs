@@ -117,6 +117,13 @@ namespace CitasBufete.Controllers
 
         public IActionResult Logout()
         {
+           
+            return  View();
+        }
+
+        [HttpPost, ActionName("Logout")]
+        public IActionResult Logout(int? id)
+        {
             if (HttpContext.Session.GetString("Nombre_cliente") != null)
             {
                 HttpContext.Session.Clear();
