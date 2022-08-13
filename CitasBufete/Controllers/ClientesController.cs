@@ -103,7 +103,7 @@ namespace CitasBufete.Controllers
             HttpContext.Session.SetInt32("Id_cliente", cliente.Id);
             HttpContext.Session.SetString("Nombre_cliente", cliente.Nombre_completo);
             var citas = from c in _context.Cita select c;
-            citas = citas.Where(c => c.Id_cliente == cliente.Id);
+            citas = citas.Where(c => c.Id_cliente == cliente.Id).OrderByDescending(c => c.Fecha);
             return View("CitasCliente", citas);
         }
 

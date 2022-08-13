@@ -65,13 +65,50 @@ namespace CitasBufete.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (new[] { DayOfWeek.Sunday, DayOfWeek.Saturday }.Contains(cita.Fecha.DayOfWeek))
+                {
+                    ModelState.AddModelError(nameof(Cita.Fecha), "Solo puede agendar citas de lunes a viernes");
+                    return View(cita);
+                }
+                if ((DateTime.Now.Date.AddDays(1)) > cita.Fecha)
+                {
+                    ModelState.AddModelError(nameof(Cita.Fecha), "Solo puede agendar citas desde mañana y a más tardar 22 días después");
+                    return View(cita);
+                }
+                if (22<CountDays(cita.Fecha))
+                {
+                    ModelState.AddModelError(nameof(Cita.Fecha), "Solo puede agendar citas desde el día siguiente y a más tardar 22 días después");
+                    return View(cita);
+                }
+                var citas = from c in _context.Cita select c;
+                citas = citas.Where(c => c.Fecha == cita.Fecha);
+                foreach (var item in citas)
+                {
+                    if (item.Especialidad==cita.Especialidad && item.Hora == cita.Hora)
+                    {
+                        ModelState.AddModelError(nameof(Cita.Hora), "No existen espacios disponibles para esa especialidad a la hora seleccionada");
+                        return View(cita);
+                    }
+
+                }
+                citas = from c in _context.Cita select c;
+                citas = citas.Where(c => c.Id_cliente == (int)HttpContext.Session.GetInt32("Id_cliente"));
+                foreach (var item in citas)
+                {
+                    if (item.Especialidad == cita.Especialidad && item.Fecha > DateTime.Now.Date)
+                    {
+                        ModelState.AddModelError(nameof(Cita.Especialidad), "Ya cuenta con una cita para la especialidad seleccionada");
+                        return View(cita);
+                    }
+
+                }
 
                 cita.Fecha_solicitud = DateTime.Now.Date;
                 cita.Id_cliente= (int)HttpContext.Session.GetInt32("Id_cliente");
                 cita.Nombre_cliente= HttpContext.Session.GetString("Nombre_cliente");
                 _context.Add(cita);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("CitasCliente","Clientes");
+                return RedirectToAction("Details",cita);
             }
             return View(cita);
             
@@ -162,12 +199,21 @@ namespace CitasBufete.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("CitasCliente","Clientes");
         }
 
         private bool CitaExists(int id)
         {
           return (_context.Cita?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        public static int CountDays(DateTime enddate)
+        {
+            var diff =  enddate- DateTime.Now;
+            return (int)diff.TotalDays; 
+        }
+
+         
+        
     }
 }

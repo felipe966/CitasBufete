@@ -2,12 +2,16 @@
 
 @{
     ViewData["Title"] = "Gestionar Citas";
+    var modelOrdered = Model.OrderByDescending(m=>m.Fecha); 
 }
+
+                                                               
+   
 
 <h1>Gestionar Citas</h1>
 
 <p>
-    <a asp-controller="Citas" asp-action="Create">Crear una nueva cita</a>
+    <a class="btn btn-primary" asp-controller="Citas" asp-action="Create">Crear una nueva cita</a>
 </p>
 <table class="table">
     <thead>
@@ -16,7 +20,10 @@
                 Estado
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fecha_solicitud)
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hora)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre_cliente)
@@ -25,16 +32,13 @@
                 @Html.DisplayNameFor(model => model.Especialidad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Hora)
+                @Html.DisplayNameFor(model => model.Fecha_solicitud)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in modelOrdered) {
             <tr>
                 <td>
                     @if (DateTime.Today < item.Fecha)
@@ -47,19 +51,18 @@
                     }
                 </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Fecha_solicitud)
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre_cliente)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Especialidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hora)
+            </td>            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_solicitud)
             </td>
             <td>
                 @if (DateTime.Today < item.Fecha)
